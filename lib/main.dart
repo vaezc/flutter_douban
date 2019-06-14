@@ -1,16 +1,16 @@
+import 'package:douban_demo/pages/theater/theaterPage.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'pages/home/home.dart';
+import 'pages/home/homePage.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return CupertinoApp(
       title: 'douban',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
+      theme: CupertinoThemeData(primaryColor: Colors.green),
       home: MyHomePage(),
     );
   }
@@ -23,43 +23,47 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _selectedIndex = 0;
-  static const TextStyle optionstyle = TextStyle(fontSize: 30,fontWeight: FontWeight.bold);
+  static const TextStyle optionStyle = TextStyle(fontSize: 30,fontWeight: FontWeight.bold);
 
+  static  List<Widget> _widgetOption = <Widget>[
+      HomeWidget(),
+      TheaterPage(),
+      Text(
+        'Index 2 : School',
+        style:optionStyle,
+      ),
+  ];
 
-  void _onItemTapped(int index){
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  static List _titles = ['Top 250','正在上映','School'];
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-     appBar: AppBar(title: const Text('Dou ban')),
-     body: Center(
-       child:new HomeWidget(),
-     ),
-     bottomNavigationBar: BottomNavigationBar(
-       items: const <BottomNavigationBarItem>[
+    return CupertinoTabScaffold(
+      tabBar: CupertinoTabBar(
+        items:  const <BottomNavigationBarItem>[
          BottomNavigationBarItem(
-           icon: Icon(Icons.home),
-           title: Text('Home')
+           icon: Icon(Icons.local_movies),
+           title: Text('TOP 250')
          ),
          BottomNavigationBarItem(
-           icon: Icon(Icons.business),
-           title: Text('Business')
+           icon: Icon(Icons.movie),
+           title: Text('正在上映')
          ),
          BottomNavigationBarItem(
            icon: Icon(Icons.school),
            title: Text('School')
          ),
        ],
-       currentIndex: _selectedIndex,
-       selectedItemColor: Colors.amber[800],
-       onTap: _onItemTapped,
-     ),
-   );
-   
+      ),
+      tabBuilder: (BuildContext context, int index){
+        return CupertinoPageScaffold(
+            navigationBar: CupertinoNavigationBar(
+              middle: Text(_titles[index],style: TextStyle(color: Colors.white),),
+              backgroundColor: Colors.green,
+            ),
+            child: _widgetOption.elementAt(index),
+        );
+      },
+    );
   }
 }

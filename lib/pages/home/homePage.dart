@@ -17,15 +17,21 @@ class _HomeWidgetState extends State<HomeWidget> {
   ScrollController _scrollController = new ScrollController();
   int _start = 0;
 
+
   @override
   void initState() {
     super.initState();
-    _getMovieListTitles();
+      _getMovieListTitles();
     _scrollController.addListener((){
       if(_scrollController.position.pixels == _scrollController.position.maxScrollExtent){
         _getMovieListTitles();
       }
     });
+  }
+
+  void dispose(){
+    super.dispose();
+    print("dispose");
   }
 
   _getMovieListTitles() {
@@ -86,7 +92,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                         movie.images.large,
                         width: 60,
                         height: 80,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.fill, 
                       ),
                       padding: EdgeInsets.all(8.0),
                     ),
