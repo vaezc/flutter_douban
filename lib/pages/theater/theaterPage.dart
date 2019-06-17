@@ -46,10 +46,14 @@ class _TheaterPageState extends State<TheaterPage> {
        Column column = new Column(
          children: <Widget>[
            new Expanded(
-              child: new Image.network(
+              child: 
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child:new Image.network(     
                 subject.images.large,
                 fit: BoxFit.fill, 
               ),
+           ),
            ),
           Text(subject.title,maxLines: 1,),
          ],
@@ -64,7 +68,7 @@ class _TheaterPageState extends State<TheaterPage> {
     return Container(
       child: GridView.builder(
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
+          crossAxisCount: 3,
           childAspectRatio: 1.0,
         ),
          itemCount: _theaterWidgetList.length,
